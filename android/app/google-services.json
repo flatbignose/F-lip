@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "405070373827",
+    "project_id": "flip--first-build",
+    "storage_bucket": "flip--first-build.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405070373827:android:78a915553c923048d71376",
+        "android_client_info": {
+          "package_name": "com.example.flip_first_build"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405070373827-to5pe9dti4nku0ru56p18fn27ck4sivu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flip_first_build",
+            "certificate_hash": "2332038938c752f7e27dd1905a12a5a06ebc9d7f"
+          }
+        },
+        {
+          "client_id": "405070373827-pbgquueprr9sgfk6nfka29h0434tgvrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE6Fm-gefK2NK5mOQWH8MbBBFXR4nwixY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405070373827-pbgquueprr9sgfk6nfka29h0434tgvrs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
