@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flip_first_build/models/user_model.dart';
 import 'package:flip_first_build/screens/flip_home.dart';
+import 'package:flip_first_build/screens/new_user_info.dart';
+import 'package:flip_first_build/screens/screen_loader.dart';
 import 'package:flip_first_build/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,7 +49,7 @@ class MyApp extends ConsumerWidget {
             error: (err, trace) {
               return ErrorScreen(error: err.toString());
             },
-            loading: () => const ScreenSplash(),
+            loading: () => const ScreenLoader(),
           ),
     );
   }

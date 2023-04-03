@@ -1,21 +1,22 @@
 import 'dart:io';
-import 'package:flip_first_build/auth/controller/auth_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../auth/controller/auth_controller.dart';
 import '../multi_use/colors.dart';
 import '../multi_use/utils.dart';
 
-class ScreenNewUser extends ConsumerStatefulWidget {
-  static const String routeName = '/new-user-info';
-  const ScreenNewUser({super.key});
+class ScreenEditUser extends ConsumerStatefulWidget {
+  const ScreenEditUser({super.key});
 
   @override
-  ConsumerState<ScreenNewUser> createState() => _ScreenNewUserState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ScreenEditUserState();
 }
 
-class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
+class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   File? image;
@@ -46,11 +47,6 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
           );
     }
   }
-
-  // void selectImageFromCamera() async {
-  //   camImage = await pickImageFromCamera(context);
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +171,7 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
                           ),
                           child: Center(
                             child: Text(
-                              'Enter new beginnings',
+                              'Edit Profile',
                               style: GoogleFonts.gorditas(
                                 color: Colors.white,
                                 fontSize: 16.5,

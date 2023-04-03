@@ -7,6 +7,7 @@ import 'package:flip_first_build/multi_use/colors.dart';
 import 'package:flip_first_build/multi_use/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatInput extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -70,7 +71,7 @@ class _ChatInputState extends ConsumerState<ChatInput> {
   }
 
   void selectImage() async {
-    File? image = await pickImageFromGallery(context);
+    File? image = await pickImageFromGallery(context, ImageSource.gallery);
     if (image != null) {
       sentFile(image, ChatEnum.image);
     }
@@ -134,7 +135,6 @@ class _ChatInputState extends ConsumerState<ChatInput> {
                     )),
                 IconButton(
                   onPressed: () {
-                    
                     sentMessage();
                   },
                   icon: isTyping

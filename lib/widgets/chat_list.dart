@@ -31,6 +31,14 @@ class ChatList extends ConsumerWidget {
                 child: Column(
                   children: [
                     InkWell(
+                      onLongPress: () {
+                        Navigator.pushNamed(context, ScreenChatRoom.routeName,
+                            arguments: {
+                              'name': chatDetails[index].name,
+                              'userId': chatDetails[index].contactId,
+                              'profilePic': chatDetails[index].profilePic,
+                            });
+                      },
                       onTap: () {
                         Navigator.pushNamed(context, ScreenChatRoom.routeName,
                             arguments: {
@@ -44,9 +52,10 @@ class ChatList extends ConsumerWidget {
                           radius: 30,
                           backgroundColor: secondColor,
                           child: CircleAvatar(
-                              radius: 26,
-                              backgroundImage:
-                                  NetworkImage(chatDetails[index].profilePic)),
+                            radius: 26,
+                            backgroundImage:
+                                NetworkImage(chatDetails[index].profilePic),
+                          ),
                         ),
                         title: Text(chatDetails[index].name),
                         subtitle: Padding(

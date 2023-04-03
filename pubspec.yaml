@@ -55,7 +55,8 @@ dependencies:
   cached_network_image: ^3.2.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-
+  anim_search_bar: ^2.0.3
+  animation_search_bar: ^0.0.10
 
 dev_dependencies:
   flutter_test:
