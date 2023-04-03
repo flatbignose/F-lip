@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import '../multi_use/colors.dart';
-import 'new_user_info.dart';
+import '../models/user_model.dart';
 
 class ScreenUserInfo extends StatefulWidget {
   static const String routeName = '/user-info';
-  const ScreenUserInfo({super.key});
+  final Box<UserModel> userDb;
+  const ScreenUserInfo({super.key, required this.userDb});
 
   @override
   State<ScreenUserInfo> createState() => _ScreenUserInfoState();
@@ -18,14 +19,14 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
   @override
   void initState() {
     // TODO: implement initState
-    userInfo();
+    //userInfo();
     super.initState();
   }
 
-  String profilePic = '';
-  String name = '';
-  String bio = '';
-  String phoneNumber = '';
+  // String profilePic = '';
+  // String name = '';
+  // String bio = '';
+  // String phoneNumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
                       width: size.width,
                       height: size.height / 2,
                       child: Image.network(
-                        profilePic,
+                        widget.userDb.values.last.profilePic,
                         fit: BoxFit.fitHeight,
                       )),
                   Positioned(
@@ -86,7 +87,7 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
                       color: Colors.black54,
                       height: size.height / 16,
                       child: Text(
-                        name,
+                        widget.userDb.values.last.name,
                         style: GoogleFonts.grandstander(fontSize: 30),
                         textAlign: TextAlign.center,
                       ),
@@ -105,7 +106,7 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
                   ),
                   width: size.width,
                   height: size.height * 0.15,
-                  child: Text('“$bio”',
+                  child: Text('“${widget.userDb.values.last.bio}”',
                       style: GoogleFonts.grandstander(fontSize: 20)),
                 ),
               ),
@@ -117,7 +118,7 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
                   color: const Color.fromRGBO(83, 68, 30, 0.6),
                   width: size.width,
                   height: size.height / 15,
-                  child: Text(phoneNumber,
+                  child: Text(widget.userDb.values.last.phoneNumber,
                       style: GoogleFonts.grandstander(fontSize: 20)),
                 ),
               ),
@@ -128,20 +129,17 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
     );
   }
 
-  void userInfo() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final info =
-        await firestore.collection('users').doc(auth.currentUser!.uid).get();
-    setState(() {
-      profilePic = info['profilePic'];
-      name = info['name'];
-      bio = info['bio'];
-      phoneNumber = info['phoneNumber'];
-    });
+  // void userInfo() async {
+  //   FirebaseAuth auth = FirebaseAuth.instance;
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   final info =
+  //       await firestore.collection('users').doc(auth.currentUser!.uid).get();
+  //   setState(() {
+  //     profilePic = info['profilePic'];
+  //     name = info['name'];
+  //     bio = info['bio'];
+  //     phoneNumber = info['phoneNumber'];
+  //   });
 
-    // setState(() {
-    //   userData = data;
-    // });
-  }
+  // }
 }

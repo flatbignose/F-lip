@@ -3,11 +3,13 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_first_build/chat_section/controller/chat_controller.dart';
 import 'package:flip_first_build/contacts/contacts_generator.dart';
+import 'package:flip_first_build/models/user_model.dart';
 import 'package:flip_first_build/screens/user_info.dart';
 import 'package:flip_first_build/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../multi_use/colors.dart';
 
@@ -23,7 +25,7 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
     with WidgetsBindingObserver {
   @override
   void initState() {
-    userDp();
+    // userDp();
     WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
   }
@@ -52,13 +54,13 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
   }
 
   //String profilePic = '';
-  String ph = '';
+  //String ph = '';
   int _index = 0;
   final screens = [
     const ChatList(),
     const ScreenContacts(),
   ];
-
+  Box<UserModel>? user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,21 +71,30 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
           style: GoogleFonts.gorditas(color: secondColor, fontSize: 40),
         ),
         actions: [
-          //IconButton(onPressed: () {}, icon: const Icon(Icons.search_sharp)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search_sharp)),
           // ignore: prefer_const_constructors
           GestureDetector(
-            onTap: () => Navigator.pushNamed(
-              context,
-              ScreenUserInfo.routeName,
-            ),
+            onTap: () => Navigator.pushNamed(context, ScreenUserInfo.routeName,
+                arguments: user),
             child: CircleAvatar(
               radius: 26,
               backgroundColor: secondColor,
               // ignore: prefer_const_constructors
-              child: CircleAvatar(
-                radius: 24,
-                backgroundImage: NetworkImage(ph),
-              ),
+              child: FutureBuilder(
+                  future: Hive.openBox<UserModel>('user'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      final userDb = Hive.box<UserModel>('user');
+                      user = userDb;
+                      return CircleAvatar(
+                        radius: 24,
+                        backgroundImage:
+                            NetworkImage(userDb.values.last.profilePic),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
             ),
           )
         ],
@@ -114,18 +125,14 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
     );
   }
 
-  void userDp() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final data =
-        await firestore.collection('users').doc(auth.currentUser!.uid).get();
+  // void userDp() async {
+  //   FirebaseAuth auth = FirebaseAuth.instance;
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   final data =
+  //       await firestore.collection('users').doc(auth.currentUser!.uid).get();
 
-    setState(() {
-      ph = data['profilePic'];
-    });
-
-    // setState(() {
-    //   userData = data;
-    // });
-  }
+  //   setState(() {
+  //     ph = data['profilePic'];
+  //   });
+  // }
 }
