@@ -47,7 +47,8 @@ class ContactsRepo {
             'name': userData.name,
             'userId': userData.userId,
             'profilePic': userData.profilePic,
-          });
+          }
+          );
         }
       }
       if (!isFound) {

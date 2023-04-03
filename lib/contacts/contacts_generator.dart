@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_first_build/contacts/contacts_controller.dart';
 import 'package:flip_first_build/screens/splash_screen.dart';
 import 'package:flip_first_build/widgets/loading.dart';
@@ -64,5 +66,18 @@ class ScreenContacts extends ConsumerWidget {
             loading: () => const Loading(),
           ),
     );
+  }
+
+  Future<List> getUsers() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    QuerySnapshot<Map<String, dynamic>> users =
+        await firestore.collection('users').get();
+    List userList = [];
+    for (var element in users.docs) {
+      Map<String, dynamic> uservalues = element.data();
+      userList.add(uservalues['phoneNumber']);
+    }
+    return userList;
   }
 }
