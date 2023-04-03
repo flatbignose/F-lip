@@ -1,8 +1,17 @@
+import 'package:hive_flutter/hive_flutter.dart';
+part 'chat_contact_model.g.dart';
+
+@HiveType(typeId: 2)
 class ChatContactTile {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String profilePic;
+  @HiveField(2)
   final String contactId;
+  @HiveField(3)
   final DateTime timeSent;
+  @HiveField(4)
   final String lastMessage;
 
   ChatContactTile({
