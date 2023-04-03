@@ -1,8 +1,10 @@
 import 'package:flip_first_build/contacts/contacts_generator.dart';
+import 'package:flip_first_build/models/user_model.dart';
 import 'package:flip_first_build/screens/landing_page.dart';
 import 'package:flip_first_build/screens/new_user_info.dart';
 import 'package:flip_first_build/screens/user_info.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../auth/screens/login.dart';
 import '../auth/screens/otp.dart';
 import '../chat_section/screens/single_chat_room.dart';
@@ -46,8 +48,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         ),
       );
       case ScreenUserInfo.routeName:
+      final userDb = settings.arguments as Box<UserModel>;
       return MaterialPageRoute(
-        builder: (context) => const ScreenUserInfo(),
+        builder: (context) =>  ScreenUserInfo(
+          userDb: userDb,
+        ),
       );
     default:
       return MaterialPageRoute(
