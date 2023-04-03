@@ -39,7 +39,7 @@ class ScreenChatRoom extends ConsumerWidget {
                 children: [
                   Text(name),
                   Text(
-                    snapshot.data!.isOnline ? 'Online' : '',
+                    snapshot.data!.isOnline ? 'Online' : 'Offline',
                     style: const TextStyle(
                         color: subColor,
                         fontSize: 14,
@@ -48,17 +48,17 @@ class ScreenChatRoom extends ConsumerWidget {
                 ],
               );
             }),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.call),
-          ),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.more_vert,
-              )),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(Icons.call),
+        //   ),
+        //   IconButton(
+        //       onPressed: () {},
+        //       icon: const Icon(
+        //         Icons.more_vert,
+        //       )),
+        // ],
       ),
       body: Column(
         // ignore: prefer_const_literals_to_create_immutables

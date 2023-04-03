@@ -9,6 +9,7 @@ import 'package:flip_first_build/models/chat_contact_model.dart';
 import 'package:flip_first_build/models/messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 final chatControllerProvider = Provider((ref) {
   final chatRepo = ref.watch(chatRepoProvider);
@@ -31,7 +32,7 @@ class ChatController {
     chatRepo.currentUserState(isOnline);
   }
 
-  Stream<List<ChatContactTile>> chatContacts() {
+  Stream<Box<ChatContactTile>> chatContacts() {
     return chatRepo.getChatContacts();
   }
 

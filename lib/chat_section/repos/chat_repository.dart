@@ -7,6 +7,7 @@ import 'package:flip_first_build/models/messaging.dart';
 import 'package:flip_first_build/multi_use/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/user_model.dart';
 import 'dart:io';
@@ -34,14 +35,19 @@ class ChatRepo {
         .update({'isOnline': isOnline});
   }
 
-  Stream<List<ChatContactTile>> getChatContacts() {
+  Stream<Box<ChatContactTile>> getChatContacts() {
     return firestore
         .collection('users')
         .doc(auth.currentUser!.uid)
         .collection('chats')
         .snapshots()
         .asyncMap((event) async {
+      final chatTileDb = await Hive.openBox<ChatContactTile>('chatTile');
+      chatTileDb.clear();
       List<ChatContactTile> contacts = [];
+      // Hive.openBox<ChatContactTile>('chatTile');
+      // Hive.deleteBoxFromDisk('chatTile');
+
       for (var document in event.docs) {
         var chatContact = ChatContactTile.fromMap(document.data());
         var userData = await firestore
@@ -49,15 +55,26 @@ class ChatRepo {
             .doc(chatContact.contactId)
             .get();
         var user = UserModel.fromMap(userData.data()!);
-        contacts.add(ChatContactTile(
-          name: user.name,
-          profilePic: user.profilePic,
+        ChatContactTile chatContactTile = ChatContactTile(
+          name: chatContact.name,
+          profilePic: chatContact.profilePic,
           contactId: chatContact.contactId,
           timeSent: chatContact.timeSent,
           lastMessage: chatContact.lastMessage,
-        ));
+        );
+
+        chatTileDb.add(chatContactTile);
+
+        // contacts.add(ChatContactTile(
+        //   name: user.name,
+        //   profilePic: user.profilePic,
+        //   contactId: chatContact.contactId,
+        //   timeSent: chatContact.timeSent,
+        //   lastMessage: chatContact.lastMessage,
+        // ));
       }
-      return contacts;
+
+      return chatTileDb;
     });
   }
 
