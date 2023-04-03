@@ -7,6 +7,7 @@ import 'package:flip_first_build/screens/flip_home.dart';
 import 'package:flip_first_build/screens/new_user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../firebase/firebase_storage_repo.dart';
 import '../../multi_use/utils.dart';
@@ -28,6 +29,17 @@ class AuthRepo {
     UserModel? user;
     if (userData.data() != null) {
       user = UserModel.fromMap(userData.data()!);
+      final userDb = await Hive.openBox<UserModel>('user');
+      UserModel userModel = UserModel(
+        name: user.name,
+        bio: user.bio,
+        profilePic: user.profilePic,
+        userId: user.userId,
+        phoneNumber: user.phoneNumber,
+        isOnline: user.isOnline,
+      );
+      //userDb.put(0, userModel);
+      userDb.add(userModel);
     }
     return user;
   }

@@ -22,6 +22,7 @@ class ContactsRepo {
         contacts = await FlutterContacts.getContacts(
           withProperties: true,
           withPhoto: true,
+          withThumbnail: true,
         );
       }
     } catch (e) {
@@ -47,8 +48,7 @@ class ContactsRepo {
             'name': userData.name,
             'userId': userData.userId,
             'profilePic': userData.profilePic,
-          }
-          );
+          });
         }
       }
       if (!isFound) {

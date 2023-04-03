@@ -4,6 +4,7 @@ import 'package:flip_first_build/models/chat_contact_model.dart';
 import 'package:flip_first_build/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import '../multi_use/colors.dart';
 
@@ -12,17 +13,18 @@ class ChatList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return StreamBuilder<List<ChatContactTile>>(
+    return StreamBuilder<Box<ChatContactTile>>(
         stream: ref.watch(chatControllerProvider).chatContacts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loading();
           }
+          final chatContactData = snapshot.data;
+          List<ChatContactTile> chatDetails = chatContactData!.values.toList();
           return ListView.builder(
             shrinkWrap: true,
-            itemCount: snapshot.data!.length,
+            itemCount: chatDetails.length,
             itemBuilder: (context, index) {
-              var chatContactData = snapshot.data![index];
               // ignore: prefer_const_constructors
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -32,9 +34,9 @@ class ChatList extends ConsumerWidget {
                       onTap: () {
                         Navigator.pushNamed(context, ScreenChatRoom.routeName,
                             arguments: {
-                              'name': chatContactData.name,
-                              'userId': chatContactData.contactId,
-                              'profilePic': chatContactData.profilePic,
+                              'name': chatDetails[index].name,
+                              'userId': chatDetails[index].contactId,
+                              'profilePic': chatDetails[index].profilePic,
                             });
                       },
                       child: ListTile(
@@ -44,18 +46,18 @@ class ChatList extends ConsumerWidget {
                           child: CircleAvatar(
                               radius: 26,
                               backgroundImage:
-                                  NetworkImage(chatContactData.profilePic)),
+                                  NetworkImage(chatDetails[index].profilePic)),
                         ),
-                        title: Text(chatContactData.name),
+                        title: Text(chatDetails[index].name),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: Text(
-                            chatContactData.lastMessage,
+                            chatDetails[index].lastMessage,
                             style: const TextStyle(color: subColor),
                           ),
                         ),
                         trailing: Text(DateFormat('hh:mm a')
-                            .format(chatContactData.timeSent)),
+                            .format(chatDetails[index].timeSent)),
                       ),
                     ),
                     const Divider(
