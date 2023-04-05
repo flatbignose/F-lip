@@ -17,6 +17,16 @@ class ScreenLogin extends ConsumerStatefulWidget {
 class _ScreenLoginState extends ConsumerState<ScreenLogin> {
   final phoneController = TextEditingController();
   Country? country;
+  bool isSend = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      isSend = false;
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -37,6 +47,9 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
   void sendPhoneNumber() {
     String phoneNumber = phoneController.text.trim();
     if (country != null && phoneNumber.isNotEmpty) {
+      setState(() {
+        isSend = !isSend;
+      });
       ref
           .read(authControllerProvider)
           .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
@@ -82,13 +95,6 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Enter your phone number below',
-                      style: GoogleFonts.aBeeZee(fontSize: 18),
-                    ),
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -129,7 +135,11 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
                   ),
                   TextButton(
                     onPressed: pickCountry,
-                    child: const Text('Pick Country'),
+                    child: Text(
+                      'Pick Country',
+                      style: GoogleFonts.georama(
+                          fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -137,20 +147,27 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
                 borderRadius: BorderRadius.circular(30),
                 onTap: sendPhoneNumber,
                 child: Container(
-                    width: size.width * 0.3,
-                    height: size.height * 0.05,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: buttongradient,
-                    ),
-                    child: const Center(
-                        child: Text(
-                      'Sent OTP',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ))),
+                  width: size.width * 0.3,
+                  height: size.height * 0.05,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: buttongradient,
+                  ),
+                  child: Center(
+                    child: isSend == false
+                        ? const Text(
+                            'Sent OTP',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          )
+                        : const CircularProgressIndicator(
+                            color: secondColor,
+                            strokeWidth: 3,
+                          ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -121,7 +121,7 @@ class AuthRepo {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const ScreenFlipHome(),
+              builder: (context) => ScreenFlipHome(),
             ),
             (route) => false);
       }

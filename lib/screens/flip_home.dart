@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_first_build/chat_section/controller/chat_controller.dart';
 import 'package:flip_first_build/contacts/contacts_generator.dart';
 import 'package:flip_first_build/models/user_model.dart';
+import 'package:flip_first_build/screens/search_page.dart';
 import 'package:flip_first_build/screens/user_info.dart';
 import 'package:flip_first_build/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../multi_use/colors.dart';
 
 class ScreenFlipHome extends ConsumerStatefulWidget {
-  const ScreenFlipHome({super.key});
-
+  ScreenFlipHome({super.key});
+  final searchaeererer = ChatList();
   @override
   ConsumerState<ScreenFlipHome> createState() => _ScreenFlipHomeState();
 }
@@ -25,7 +26,6 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
     with WidgetsBindingObserver {
   @override
   void initState() {
-    // userDp();
     WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
   }
@@ -53,25 +53,30 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
     }
   }
 
-  //String profilePic = '';
-  //String ph = '';
   int _index = 0;
   final screens = [
-    const ChatList(),
+    ChatList(),
     const ScreenContacts(),
   ];
   Box<UserModel>? user;
+  bool searchPressed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 120,
         title: Text(
-          'Flip!',
+          'F-lip!',
           style: GoogleFonts.gorditas(color: secondColor, fontSize: 40),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_sharp)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  searchPressed = !searchPressed;
+                });
+              },
+              icon: const Icon(Icons.search_sharp)),
           // ignore: prefer_const_constructors
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, ScreenUserInfo.routeName,
@@ -120,19 +125,45 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
       body:
           //const ChatList(),
           Column(
-        children: [Expanded(child: screens[_index])],
+        children: [
+          Visibility(
+            visible: searchPressed,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: secondColor,
+                    borderRadius: BorderRadius.circular(20)),
+                width: double.infinity,
+                height: 50,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search User',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                        )),
+                    onChanged: (value) {
+                      // widget.searchaeererer.search(user!, value);\
+                      DisplaySearch.search(user!, value);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+          searchPressed
+              ? Expanded(child: DisplaySearch())
+              : Expanded(child: screens[_index])
+        ],
       ),
     );
   }
 
-  // void userDp() async {
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //   final data =
-  //       await firestore.collection('users').doc(auth.currentUser!.uid).get();
+//   //static ValueNotifier<List<UserModel>> searchResult = ValueNotifier([]);
 
-  //   setState(() {
-  //     ph = data['profilePic'];
-  //   });
-  // }
+  //   //
 }

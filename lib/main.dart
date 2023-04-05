@@ -44,7 +44,7 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const ScreenSplash();
               }
-              return const ScreenFlipHome();
+              return ScreenFlipHome();
             },
             error: (err, trace) {
               return ErrorScreen(error: err.toString());

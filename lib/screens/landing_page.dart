@@ -27,7 +27,7 @@ class ScreenLanding extends StatelessWidget {
                   style: GoogleFonts.gorditas(color: secondColor, fontSize: 70),
                 ),
                 Text(
-                  'Thank you for downloading We hope that you stay long enough...',
+                  'Thank you for downloading',
                   style: GoogleFonts.gorditas(
                     color: Color.fromRGBO(255, 255, 255, 1),
                     fontSize: 25,

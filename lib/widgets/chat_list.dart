@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import '../models/user_model.dart';
 import '../multi_use/colors.dart';
 
 class ChatList extends ConsumerWidget {
-  const ChatList({super.key});
-
+  ChatList({super.key});
+  List<ChatContactTile> chatDetails = [];
+  List<UserModel> searchResult = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return StreamBuilder<Box<ChatContactTile>>(
@@ -20,33 +22,25 @@ class ChatList extends ConsumerWidget {
             return const Loading();
           }
           final chatContactData = snapshot.data;
-          List<ChatContactTile> chatDetails = chatContactData!.values.toList();
+          chatDetails = chatContactData!.values.toList();
           return ListView.builder(
             shrinkWrap: true,
             itemCount: chatDetails.length,
             itemBuilder: (context, index) {
               // ignore: prefer_const_constructors
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onLongPress: () {
-                        Navigator.pushNamed(context, ScreenChatRoom.routeName,
-                            arguments: {
-                              'name': chatDetails[index].name,
-                              'userId': chatDetails[index].contactId,
-                              'profilePic': chatDetails[index].profilePic,
-                            });
-                      },
-                      onTap: () {
-                        Navigator.pushNamed(context, ScreenChatRoom.routeName,
-                            arguments: {
-                              'name': chatDetails[index].name,
-                              'userId': chatDetails[index].contactId,
-                              'profilePic': chatDetails[index].profilePic,
-                            });
-                      },
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, ScreenChatRoom.routeName,
+                          arguments: {
+                            'name': chatDetails[index].name,
+                            'userId': chatDetails[index].contactId,
+                            'profilePic': chatDetails[index].profilePic,
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: ListTile(
                         leading: CircleAvatar(
                           radius: 30,
@@ -63,19 +57,23 @@ class ChatList extends ConsumerWidget {
                           child: Text(
                             chatDetails[index].lastMessage,
                             style: const TextStyle(color: subColor),
+                            maxLines: 1,
                           ),
                         ),
-                        trailing: Text(DateFormat('hh:mm a')
-                            .format(chatDetails[index].timeSent)),
+                        trailing: Text(
+                          DateFormat('hh:mm a')
+                              .format(chatDetails[index].timeSent),
+                          style: const TextStyle(fontSize: 12, color: subColor),
+                        ),
                       ),
                     ),
-                    const Divider(
-                      height: 0,
-                      color: Colors.white,
-                      thickness: 0.2,
-                    ),
-                  ],
-                ),
+                  ),
+                  const Divider(
+                    height: 0,
+                    color: Colors.white,
+                    thickness: 0.2,
+                  ),
+                ],
               );
             },
           );

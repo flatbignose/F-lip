@@ -31,7 +31,7 @@ class RecievedMessages extends StatelessWidget {
               Padding(
                   padding: type == ChatEnum.message
                       ? const EdgeInsets.fromLTRB(
-                          50,
+                          10,
                           5,
                           30,
                           20,

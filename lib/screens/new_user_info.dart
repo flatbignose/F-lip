@@ -20,6 +20,7 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
   final TextEditingController bioController = TextEditingController();
   File? image;
   File? camImage;
+  bool isFilled = false;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -36,6 +37,9 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
   void storeUserInfo() async {
     String name = nameController.text.trim();
     String bio = bioController.text.trim();
+    setState(() {
+      isFilled = !isFilled;
+    });
 
     if (name.isNotEmpty && bio.isNotEmpty) {
       ref.read(authControllerProvider).saveUserInfoToFirebase(
@@ -116,8 +120,9 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white,),
                       controller: nameController,
+                      maxLength: 10,
                       decoration: const InputDecoration(
                         fillColor: Color.fromARGB(98, 0, 0, 0),
                         filled: true,

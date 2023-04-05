@@ -40,6 +40,7 @@ class ChatRepo {
         .collection('users')
         .doc(auth.currentUser!.uid)
         .collection('chats')
+        .orderBy('timeSent', descending: true)
         .snapshots()
         .asyncMap((event) async {
       final chatTileDb = await Hive.openBox<ChatContactTile>('chatTile');
@@ -96,7 +97,7 @@ class ChatRepo {
     });
   }
 
-//save the message to firestore and display both in sender and reciever tile
+  //save the message to firestore and display both in sender and reciever tile
   void _saveToContactCollection(
     UserModel senderUserData,
     UserModel recieverUserData,

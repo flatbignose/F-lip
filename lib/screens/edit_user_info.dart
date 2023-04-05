@@ -114,9 +114,11 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                     child: TextField(
                       style: const TextStyle(color: Colors.white),
                       controller: nameController,
+                      maxLength: 20,
                       decoration: const InputDecoration(
                         fillColor: Color.fromARGB(98, 0, 0, 0),
                         filled: true,
+                        counterText: '',
                         hintText: 'Enter username',
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -138,6 +140,7 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                       maxLines: 3,
                       style: const TextStyle(color: Colors.white),
                       controller: bioController,
+                      maxLength: 100,
                       decoration: const InputDecoration(
                         fillColor: Color.fromARGB(98, 0, 0, 0),
                         filled: true,
