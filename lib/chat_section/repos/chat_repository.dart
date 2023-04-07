@@ -145,33 +145,35 @@ class ChatRepo {
     required String receiverUsername,
     required ChatEnum chatType,
   }) async {
-    final messages = Messaging(
-      senderId: auth.currentUser!.uid,
-      recieverId: recieverUserId,
-      message: message,
-      messageId: messageId,
-      type: chatType,
-      timeSent: timeSent,
-      isSeen: false,
-    );
+    if (message != '') {
+      final messages = Messaging(
+        senderId: auth.currentUser!.uid,
+        recieverId: recieverUserId,
+        message: message,
+        messageId: messageId,
+        type: chatType,
+        timeSent: timeSent,
+        isSeen: false,
+      );
 
-    await firestore
-        .collection('users')
-        .doc(auth.currentUser!.uid)
-        .collection('chats')
-        .doc(recieverUserId)
-        .collection('messages')
-        .doc(messageId)
-        .set(messages.toMap());
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(recieverUserId)
+          .collection('messages')
+          .doc(messageId)
+          .set(messages.toMap());
 
-    await firestore
-        .collection('users')
-        .doc(recieverUserId)
-        .collection('chats')
-        .doc(auth.currentUser!.uid)
-        .collection('messages')
-        .doc(messageId)
-        .set(messages.toMap());
+      await firestore
+          .collection('users')
+          .doc(recieverUserId)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .set(messages.toMap());
+    }
   }
 
   void sentMessage({

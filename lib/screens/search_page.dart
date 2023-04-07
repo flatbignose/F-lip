@@ -30,6 +30,11 @@ class DisplaySearch extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
+                // Navigator.pushReplacementNamed(context, Scree, arguments: {
+                //   'name': userList[index].name,
+                //   'userId': userList[index].contactId,
+                //   'profilePic': userList[index].profilePic,
+                // });
                 Navigator.pushNamed(context, ScreenChatRoom.routeName,
                     arguments: {
                       'name': userList[index].name,
@@ -48,11 +53,14 @@ class DisplaySearch extends StatelessWidget {
                       backgroundImage: NetworkImage(userList[index].profilePic),
                     ),
                   ),
-                  title: Text(userList[index].name),
+                  title: Text(
+                    userList[index].name,
+                  ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: Text(
                       userList[index].lastMessage,
+                      maxLines: 1,
                       style: const TextStyle(color: subColor),
                     ),
                   ),

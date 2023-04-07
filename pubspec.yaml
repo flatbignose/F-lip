@@ -57,6 +57,8 @@ dependencies:
   hive_flutter: ^1.1.0
   anim_search_bar: ^2.0.3
   animation_search_bar: ^0.0.10
+  image_cropper: ^3.0.2
+  flutter_native_image: ^0.0.6+1
 
 dev_dependencies:
   flutter_test:

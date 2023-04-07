@@ -24,7 +24,7 @@ class _ChatInputState extends ConsumerState<ChatInput> {
   //FocusNode focusNode = FocusNode();
 
   void sentMessage() async {
-    if (isTyping) {
+    if (isTyping ) {
       ref.read(chatControllerProvider).sentTextMessage(
             context,
             _messagecontroller.text.trim(),
