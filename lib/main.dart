@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flip_first_build/auth/screens/login.dart';
+import 'package:flip_first_build/auth/screens/otp.dart';
 import 'package:flip_first_build/models/user_model.dart';
 import 'package:flip_first_build/screens/flip_home.dart';
 import 'package:flip_first_build/screens/new_user_info.dart';
@@ -39,18 +41,19 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData.dark().copyWith(
           colorScheme: const ColorScheme.dark(background: Colors.black)),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: ref.watch(userProvider).when(
-            data: (user) {
-              if (user == null) {
-                return const ScreenSplash();
-              }
-              return ScreenFlipHome();
-            },
-            error: (err, trace) {
-              return ErrorScreen(error: err.toString());
-            },
-            loading: () => const ScreenLoader(),
-          ),
+      home: 
+      ref.watch(userProvider).when(
+        data: (user) {
+          if (user == null) {
+            return const ScreenSplash();
+          }
+          return ScreenFlipHome();
+        },
+        error: (err, trace) {
+          return ErrorScreen(error: err.toString());
+        },
+        loading: () => const ScreenLoader(),
+      ),
     );
   }
 }

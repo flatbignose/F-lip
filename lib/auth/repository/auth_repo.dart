@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flip_first_build/auth/controller/auth_controller.dart';
 import 'package:flip_first_build/auth/screens/otp.dart';
 import 'package:flip_first_build/models/user_model.dart';
 import 'package:flip_first_build/screens/flip_home.dart';
@@ -54,7 +55,7 @@ class AuthRepo {
           verificationFailed: (e) {
             throw Exception(e.message);
           },
-          codeSent: (verificationId, forceResendingToken) {
+          codeSent: (verificationId, forceResendingToken,) {
             Navigator.pushNamed(
               context,
               ScreenOTP.routeName,

@@ -185,6 +185,7 @@ class ChatRepo {
     //user > senderId > recieverId > message > messageId > storemessage
     try {
       var timeSent = DateTime.now();
+      
       UserModel recieverUserData;
       var userData =
           await firestore.collection('users').doc(recieverUserId).get();

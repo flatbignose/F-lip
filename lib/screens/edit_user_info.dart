@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flip_first_build/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../auth/controller/auth_controller.dart';
@@ -10,17 +12,26 @@ import '../multi_use/colors.dart';
 import '../multi_use/utils.dart';
 
 class ScreenEditUser extends ConsumerStatefulWidget {
-  const ScreenEditUser({super.key});
+  final Box<UserModel> user;
+  const ScreenEditUser({required this.user, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ScreenEditUserState();
 }
 
 class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
   File? image;
-  File? camImage;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    nameController = TextEditingController(text: widget.user.values.last.name);
+    bioController = TextEditingController(text: widget.user.values.last.bio);
+    super.initState();
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -31,14 +42,16 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
 
   void selectImageFromGallery(ImageSource source) async {
     image = await pickImageFromGallery(context, source);
-    setState(() {});
+    setState(() {
+      pressed = true;
+    });
   }
 
   void storeUserInfo() async {
     String name = nameController.text.trim();
     String bio = bioController.text.trim();
 
-    if (name.isNotEmpty && bio.isNotEmpty) {
+    if (name.isNotEmpty && bio.isNotEmpty && pressed) {
       ref.read(authControllerProvider).saveUserInfoToFirebase(
             context,
             name,
@@ -48,8 +61,10 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
     }
   }
 
+  bool pressed = false;
   @override
   Widget build(BuildContext context) {
+    String profilePic = widget.user.values.last.profilePic;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -57,9 +72,10 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
           width: double.infinity,
           height: double.infinity,
           decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/login_cover.png'),
-                  fit: BoxFit.cover)),
+            image: DecorationImage(
+                image: AssetImage('assets/images/login_cover.png'),
+                fit: BoxFit.cover),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,13 +88,14 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                     radius: 100,
                     backgroundColor: secondColor,
                     child: image == null
-                        ? const CircleAvatar(
+                        ? CircleAvatar(
                             radius: 97,
-                            backgroundImage:
-                                AssetImage('assets/images/default_user.png'),
+                            backgroundImage: NetworkImage(
+                                widget.user.values.last.profilePic),
                           )
                         : CircleAvatar(
-                            radius: 97, backgroundImage: FileImage(image!)),
+                            radius: 97, backgroundImage: FileImage(image!),
+                            ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -144,7 +161,7 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                       decoration: const InputDecoration(
                         fillColor: Color.fromARGB(98, 0, 0, 0),
                         filled: true,
-                        hintText: 'Write something about you',
+                        hintText: 'Update your bio',
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             borderSide:

@@ -1,4 +1,5 @@
 import 'package:flip_first_build/auth/controller/auth_controller.dart';
+import 'package:flip_first_build/multi_use/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,35 +54,40 @@ class ScreenOTP extends ConsumerWidget {
                   image: AssetImage('assets/images/login_cover.png'),
                   fit: BoxFit.cover)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              Text('Enter OTP sent to your phone number',
-                  style: GoogleFonts.grandstander(fontSize: 20)),
-              const SizedBox(
-                height: 20,
-              ),
-              Pinput(
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  if (value.length == 6) {
-                    verifyOTP(context, ref, value.trim());
-                  }
-                },
-                defaultPinTheme: defaultPinTheme,
-                focusedPinTheme: focusedPinTheme,
-                submittedPinTheme: submittedPinTheme,
-                pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                showCursor: true,
-                length: 6,
-              ),
-              const SizedBox(
-                height: 20,
+              Column(
+                children: [
+                  Text('Enter OTP sent to your phone number',
+                      style: GoogleFonts.grandstander(fontSize: 20)),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Pinput(
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      if (value.length == 6) {
+                        verifyOTP(context, ref, value.trim());
+                      } else {}
+                    },
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    showCursor: true,
+                    length: 6,
+                  ),
+                ],
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     'Edit Phone Number?',
-                    style: GoogleFonts.grandstander(fontSize: 20),
+                    style: GoogleFonts.grandstander(
+                        fontSize: 20, color: secondColor),
                   ))
             ],
           ),

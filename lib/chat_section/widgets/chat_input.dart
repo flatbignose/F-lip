@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flip_first_build/chat_section/controller/chat_controller.dart';
 import 'package:flip_first_build/enums/chat_enum.dart';
@@ -24,7 +23,7 @@ class _ChatInputState extends ConsumerState<ChatInput> {
   //FocusNode focusNode = FocusNode();
 
   void sentMessage() async {
-    if (isTyping ) {
+    if (isTyping) {
       ref.read(chatControllerProvider).sentTextMessage(
             context,
             _messagecontroller.text.trim(),
@@ -35,7 +34,6 @@ class _ChatInputState extends ConsumerState<ChatInput> {
       });
     }
   }
-
   // void hideEmojiSet() {
   //   setState(() {
   //     isEmojiSet = false;

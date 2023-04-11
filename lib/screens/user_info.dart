@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_first_build/auth/screens/login.dart';
+import 'package:flip_first_build/screens/about.dart';
 import 'package:flip_first_build/screens/edit_user_info.dart';
+import 'package:flip_first_build/screens/privacypolicy.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -41,7 +43,9 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenEditUser(),
+                builder: (context) => ScreenEditUser(
+                  user: widget.userDb,
+                ),
               ));
         },
         backgroundColor: secondColor,
@@ -135,63 +139,57 @@ class _ScreenUserInfoState extends State<ScreenUserInfo> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.centerLeft,
-                  color: const Color.fromRGBO(83, 68, 30, 0.6),
-                  width: size.width,
-                  height: size.height / 15,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.info_outline),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text('About Us',
-                          style: GoogleFonts.grandstander(fontSize: 20)),
-                    ],
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScreenAboutUs(),
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.centerLeft,
+                    color: const Color.fromRGBO(83, 68, 30, 0.6),
+                    width: size.width,
+                    height: size.height / 15,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.info_outline),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text('About Us',
+                            style: GoogleFonts.grandstander(fontSize: 20)),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.centerLeft,
-                  color: const Color.fromRGBO(83, 68, 30, 0.6),
-                  width: size.width,
-                  height: size.height / 15,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.privacy_tip_outlined),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text('Privacy Policy',
-                          style: GoogleFonts.grandstander(fontSize: 20)),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.centerLeft,
-                  color: const Color.fromRGBO(83, 68, 30, 0.6),
-                  width: size.width,
-                  height: size.height / 15,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.rule_rounded),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text('Terms & Conditions',
-                          style: GoogleFonts.grandstander(fontSize: 20)),
-                    ],
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScreenPrivacyPolicy(),
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.centerLeft,
+                    color: const Color.fromRGBO(83, 68, 30, 0.6),
+                    width: size.width,
+                    height: size.height / 15,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.privacy_tip_outlined),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text('Privacy Policy',
+                            style: GoogleFonts.grandstander(fontSize: 20)),
+                      ],
+                    ),
                   ),
                 ),
               ),

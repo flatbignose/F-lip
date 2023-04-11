@@ -17,14 +17,11 @@ class ScreenLogin extends ConsumerStatefulWidget {
 class _ScreenLoginState extends ConsumerState<ScreenLogin> {
   final phoneController = TextEditingController();
   Country? country;
-  bool isSend = false;
+  bool isClicked = false;
 
   @override
   void initState() {
     // TODO: implement initState
-    setState(() {
-      isSend = false;
-    });
     super.initState();
   }
 
@@ -45,11 +42,11 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
   }
 
   void sendPhoneNumber() {
+    setState(() {
+      isClicked = true;
+    });
     String phoneNumber = phoneController.text.trim();
     if (country != null && phoneNumber.isNotEmpty) {
-      setState(() {
-        isSend = !isSend;
-      });
       ref
           .read(authControllerProvider)
           .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
@@ -144,29 +141,44 @@ class _ScreenLoginState extends ConsumerState<ScreenLogin> {
                 ],
               ),
               InkWell(
+                splashColor: secondColor,
+                onLongPress: () {},
                 borderRadius: BorderRadius.circular(30),
                 onTap: sendPhoneNumber,
-                child: Container(
-                  width: size.width * 0.3,
-                  height: size.height * 0.05,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: buttongradient,
-                  ),
-                  child: Center(
-                    child: isSend == false
-                        ? const Text(
-                            'Sent OTP',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          )
-                        : const CircularProgressIndicator(
-                            color: secondColor,
-                            strokeWidth: 3,
-                          ),
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: size.width * 0.3,
+                      height: size.height * 0.05,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: buttongradient,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Sent OTP',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Visibility(
+                      visible: isClicked,
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: secondColor,
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],

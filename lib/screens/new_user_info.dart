@@ -120,7 +120,9 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: TextField(
-                      style: const TextStyle(color: Colors.white,),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
                       controller: nameController,
                       maxLength: 10,
                       decoration: const InputDecoration(
@@ -170,24 +172,22 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
                     onTap: () {
                       storeUserInfo();
                     },
-                    child: Expanded(
-                      child: Container(
-                          width: size.width * 0.5,
-                          height: size.height * 0.06,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            gradient: buttongradient,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Enter new beginnings',
-                              style: GoogleFonts.gorditas(
-                                color: Colors.white,
-                                fontSize: 16.5,
-                              ),
+                    child: Container(
+                        width: size.width * 0.5,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: buttongradient,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Enter new beginnings',
+                            style: GoogleFonts.gorditas(
+                              color: Colors.white,
+                              fontSize: 16.5,
                             ),
-                          )),
-                    ),
+                          ),
+                        )),
                   ),
                 ],
               ),
