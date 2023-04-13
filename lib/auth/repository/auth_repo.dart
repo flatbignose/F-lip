@@ -98,7 +98,7 @@ class AuthRepo {
     try {
       String userId = auth.currentUser!.uid;
       String photoUrl = 'assets/images/default_user.png';
-
+  
       if (profilePic != null) {
         photoUrl = await ref
             .read(commonFirebaseStorageRepoProvider)
