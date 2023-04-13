@@ -69,7 +69,7 @@ class _SingleChatViewState extends ConsumerState<SingleChatView> {
                 if (messageData.senderId ==
                     FirebaseAuth.instance.currentUser!.uid) {
                   if (lastTime == null ||
-                      lastTime!.difference(messageData.timeSent).inHours != 0) {
+                      lastTime!.difference(messageData.timeSent).inDays != 0) {
                     lastTime = messageData.timeSent;
                     return Column(
                       children: [

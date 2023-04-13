@@ -61,8 +61,7 @@ class ChatList extends ConsumerWidget {
                           ),
                         ),
                         trailing: Text(
-                          DateFormat('hh:mm a')
-                              .format(chatDetails[index].timeSent),
+                          DateFormat.yMd().format(chatDetails[index].timeSent),
                           style: const TextStyle(fontSize: 12, color: subColor),
                         ),
                       ),

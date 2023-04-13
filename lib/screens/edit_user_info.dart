@@ -64,7 +64,6 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
   bool pressed = false;
   @override
   Widget build(BuildContext context) {
-    String profilePic = widget.user.values.last.profilePic;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -76,112 +75,119 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                 image: AssetImage('assets/images/login_cover.png'),
                 fit: BoxFit.cover),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Stack(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundColor: secondColor,
-                    child: image == null
-                        ? CircleAvatar(
-                            radius: 97,
-                            backgroundImage: NetworkImage(
-                                widget.user.values.last.profilePic),
-                          )
-                        : CircleAvatar(
-                            radius: 97, backgroundImage: FileImage(image!),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Stack(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundColor: secondColor,
+                      child: image == null
+                          ? CircleAvatar(
+                              radius: 97,
+                              backgroundColor: Colors.green,
+                              backgroundImage: NetworkImage(
+                                  widget.user.values.last.profilePic),
+                            )
+                          : CircleAvatar(
+                              radius: 97,
+                              backgroundImage: FileImage(image!),
                             ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InkWell(
-                      onTap: () {
-                        selectPhoto(context);
-                      },
-                      child: const CircleAvatar(
-                        radius: 35,
-                        backgroundColor: secondColor,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 32,
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Color.fromARGB(255, 207, 199, 199),
-                            size: 40,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: InkWell(
+                        onTap: () {
+                          selectPhoto(context);
+                        },
+                        child: const CircleAvatar(
+                          radius: 35,
+                          backgroundColor: secondColor,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black,
+                            radius: 32,
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Color.fromARGB(255, 207, 199, 199),
+                              size: 40,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: nameController,
-                      maxLength: 20,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromARGB(98, 0, 0, 0),
-                        filled: true,
-                        counterText: '',
-                        hintText: 'Enter username',
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextField(
+                        style: const TextStyle(color: Colors.white),
+                        controller: nameController,
+                        maxLength: 20,
+                        decoration: const InputDecoration(
+                          fillColor: Color.fromARGB(98, 0, 0, 0),
+                          filled: true,
+                          counterText: '',
+                          hintText: 'Enter username',
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: TextField(
-                      maxLines: 3,
-                      style: const TextStyle(color: Colors.white),
-                      controller: bioController,
-                      maxLength: 100,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromARGB(98, 0, 0, 0),
-                        filled: true,
-                        hintText: 'Update your bio',
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: TextField(
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.white),
+                        controller: bioController,
+                        maxLength: 100,
+                        decoration: const InputDecoration(
+                          fillColor: Color.fromARGB(98, 0, 0, 0),
+                          filled: true,
+                          hintText: 'Update your bio',
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {
-                      storeUserInfo();
-                    },
-                    child: Expanded(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(30),
+                      onTap: () {
+                        storeUserInfo();
+                      },
                       child: Container(
                           width: size.width * 0.5,
                           height: size.height * 0.06,
@@ -199,10 +205,10 @@ class _ScreenEditUserState extends ConsumerState<ScreenEditUser> {
                             ),
                           )),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

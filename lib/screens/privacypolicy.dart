@@ -37,22 +37,11 @@ class ScreenPrivacyPolicy extends StatelessWidget {
                     color: secondColor),
               ),
               Text(
-                "We may collect certain personal information from you when you use our mobile application. This information may include your name, email address, phone number, and any other information you provide to us when you create an account or use our services.\nWe may also collect non-personal information such as your device information, location data, and usage patterns to improve our application's performance and user experience.",
+                "We may collect certain personal information from you when you use our mobile application. This information may include your name, phone number, and any other information you provide to us when you create an account or use our services.",
                 style: GoogleFonts.grandstander(fontSize: 16),
               ),
               const SizedBox(
                 height: 10,
-              ),
-              Text(
-                'Use of Information',
-                style: GoogleFonts.gorditas(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: secondColor),
-              ),
-              Text(
-                "We use your personal information to provide our services to you, communicate with you, and improve our application. We may also use your information to send you promotional materials or other communications that we think may be of interest to you.\nWe do not sell or rent your personal information to third parties. We may share your information with our service providers or other third-party partners who assist us in providing our services to you.",
-                style: GoogleFonts.grandstander(fontSize: 16),
               ),
               const SizedBox(
                 height: 10,

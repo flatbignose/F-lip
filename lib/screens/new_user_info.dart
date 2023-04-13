@@ -19,7 +19,6 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   File? image;
-  File? camImage;
   bool isFilled = false;
   @override
   void dispose() {
@@ -61,137 +60,143 @@ class _ScreenNewUserState extends ConsumerState<ScreenNewUser> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/login_cover.png'),
-                  fit: BoxFit.cover)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Stack(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundColor: secondColor,
-                    child: image == null
-                        ? const CircleAvatar(
-                            radius: 97,
-                            backgroundImage:
-                                AssetImage('assets/images/default_user.png'),
-                          )
-                        : CircleAvatar(
-                            radius: 97, backgroundImage: FileImage(image!)),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InkWell(
-                      onTap: () {
-                        selectPhoto(context);
-                      },
-                      child: const CircleAvatar(
-                        radius: 35,
-                        backgroundColor: secondColor,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 32,
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Color.fromARGB(255, 207, 199, 199),
-                            size: 40,
-                          ),
-                        ),
-                      ),
+        child: Expanded(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/login_cover.png'),
+                    fit: BoxFit.cover)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Stack(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundColor: secondColor,
+                      child: image == null
+                          ? const CircleAvatar(
+                              radius: 97,
+                              backgroundImage:
+                                  AssetImage('assets/images/default_user.png'),
+                            )
+                          : CircleAvatar(
+                              radius: 97, backgroundImage: FileImage(image!)),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: TextField(
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      controller: nameController,
-                      maxLength: 10,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromARGB(98, 0, 0, 0),
-                        filled: true,
-                        hintText: 'Enter username',
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: TextField(
-                      maxLines: 3,
-                      style: const TextStyle(color: Colors.white),
-                      controller: bioController,
-                      decoration: const InputDecoration(
-                        fillColor: Color.fromARGB(98, 0, 0, 0),
-                        filled: true,
-                        hintText: 'Write something about you',
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide:
-                                BorderSide(color: secondColor, width: 2)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {
-                      storeUserInfo();
-                    },
-                    child: Container(
-                        width: size.width * 0.5,
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: buttongradient,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Enter new beginnings',
-                            style: GoogleFonts.gorditas(
-                              color: Colors.white,
-                              fontSize: 16.5,
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: InkWell(
+                        onTap: () {
+                          selectPhoto(context);
+                        },
+                        child: const CircleAvatar(
+                          radius: 35,
+                          backgroundColor: secondColor,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black,
+                            radius: 32,
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Color.fromARGB(255, 207, 199, 199),
+                              size: 40,
                             ),
                           ),
-                        )),
-                  ),
-                ],
-              ),
-            ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextField(
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                        controller: nameController,
+                        maxLength: 10,
+                        decoration: const InputDecoration(
+                          fillColor: Color.fromARGB(98, 0, 0, 0),
+                          filled: true,
+                          hintText: 'Enter username',
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: TextField(
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.white),
+                        controller: bioController,
+                        decoration: const InputDecoration(
+                          fillColor: Color.fromARGB(98, 0, 0, 0),
+                          filled: true,
+                          hintText: 'Write something about you',
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: secondColor, width: 2)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(30),
+                      onTap: () {
+                        storeUserInfo();
+                      },
+                      child: Container(
+                          width: size.width * 0.5,
+                          height: size.height * 0.06,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: buttongradient,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Enter new beginnings',
+                              style: GoogleFonts.gorditas(
+                                color: Colors.white,
+                                fontSize: 16.5,
+                              ),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

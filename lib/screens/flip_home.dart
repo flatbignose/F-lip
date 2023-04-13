@@ -15,8 +15,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../multi_use/colors.dart';
 
 class ScreenFlipHome extends ConsumerStatefulWidget {
-  ScreenFlipHome({super.key});
-  final searchaeererer = ChatList();
+  const ScreenFlipHome({super.key});
   @override
   ConsumerState<ScreenFlipHome> createState() => _ScreenFlipHomeState();
 }
@@ -27,6 +26,7 @@ class _ScreenFlipHomeState extends ConsumerState<ScreenFlipHome>
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
     // TODO: implement initState
   }
 
