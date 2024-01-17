@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flip_first_build/auth/repository/auth_repo.dart';
 import 'package:flip_first_build/models/user_model.dart';
 import 'package:flutter/material.dart';
